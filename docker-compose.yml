@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  car:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: car
+    container_name: car
+    user: root
+    environment:
+      ENV_FOR_DYNACONF: docker
+    command: "poetry run python /case-car/main.py"
+    ports:
+      - "8001:8001"
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - .:/case-car
+
+  redis:
+    image: redis
+    hostname: redis
+    container_name: redis
+    restart: unless-stopped
+    command: >
+      bash -c "redis-server --appendonly yes"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: test
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/postgresql:/var/lib/postgresql/data
