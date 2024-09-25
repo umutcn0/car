@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1
 ENV C_FORCE_ROOT=true
 
 # Uygulama dizinini oluştur ve içine kopyala
-WORKDIR /case-car
+WORKDIR /car
 COPY . .
 
 # Gerekli paketlerin yüklenmesi

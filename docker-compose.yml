@@ -10,14 +10,14 @@ services:
     user: root
     environment:
       ENV_FOR_DYNACONF: docker
-    command: "poetry run python /case-car/main.py"
+    command: "poetry run python /car/main.py"
     ports:
       - "8001:8001"
     depends_on:
       - redis
       - postgres
     volumes:
-      - .:/case-car
+      - .:/car
 
   redis:
     image: redis
